@@ -839,7 +839,7 @@
                     msg(what.length == 0 ? 2 : 0, str("%0 lang attributes found", [what.length]), what)
                 ];
             },
-            "H37: Using alt attributes on img elements": function () {
+            "H37 - Using alt attributes on img elements": function () {
                 var what = _dp.imagesWithoutAlt(), all = _dp.getTagCount("IMG");
                 return msgs = [
                     msg(what.length != 0 ? 2 : 0, str("%0 images (%0/%1) without alt found", [what, all]), [])
