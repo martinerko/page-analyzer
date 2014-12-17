@@ -9,7 +9,7 @@
     w = window.open('about:blank', '', 'width=360,height=480,resizable=1,scrollbars=yes');
     if (w != null) {
         // BUG: onload may still fail in MSIE (use refresh as workaround) 
-        // FIX: I gave up and implemented wait, ale aj to sa zda ze zamrzne obcas ;-(
+        // FIX: I gave up and implemented wait, it seems to freeze also ;-(
         // TODO: study more
         var markup =
             '<!DOCTYPE HTML>\
