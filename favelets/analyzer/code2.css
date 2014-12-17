@@ -1,0 +1,44 @@
+﻿body
+{
+    font-family:Verdana;
+    font-size:0.8em;
+}
+.progress
+{
+    text-align: center;
+    height: 4em;
+    background-image: url(../websedit-ag-bar.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+LI.info
+{
+}
+LI.warning
+{
+    color: orange;
+}
+LI.error
+{
+    color: Red;
+}
+PRE
+{
+    color: Gray;
+    /*display:none;*/
+}
+h1
+{
+    font-size:1.4em;
+    padding-top:0.5em;
+    border-top:1px dashed black;
+}
+h2
+{
+    font-size:1.2em;
+}
+footer
+{
+    font-size:0.8em;
+    color:Gray;
+}

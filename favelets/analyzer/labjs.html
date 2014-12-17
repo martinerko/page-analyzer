@@ -1,0 +1,30 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <title>LabJS test</title>
+    <link href="./code2.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="progress">
+        Loading scripts... please wait</div>
+    <script type="text/javascript" src="../LAB.src.js"></script>
+    <script type="text/javascript">
+        var base = document.location.href + "/..";
+        var bodyScripts = [
+            base + "/../jquery-1.5b1.js"
+            , base + "/../jquery.ref.js"
+            , base + "/../jquery.ba-urlinternal.js"
+        //, "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.js"
+            , base + "/../modernizr.beta.js"
+            , base + "/code2.js"
+            ];
+        $LAB.setGlobalDefaults({ UsePreloading: false });
+        $LAB
+        .script(bodyScripts[0]).wait()
+        .script(bodyScripts[1])
+        .script(bodyScripts[2])
+        .script(bodyScripts[3]).wait()
+        .script(bodyScripts[4]).wait(function () { alert("all done"); });
+    </script>
+</body>
+</html>

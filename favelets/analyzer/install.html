@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Favlet Instalation</title>
+    <script type="text/javascript">
+        window.onload = function () {
+
+            function getBaseUri() {
+                //naive, but enough for now
+                var l = window.location.href, f = l.hash || "", h = l.href,
+                b = l.substring(0,l.length - f.length).split("/").slice(0, -1).join("/");
+                return b;
+            };
+            // TODO: elmiminate double inject (call method if inserted)
+            var scriptUri = getBaseUri() + "/stub.js",
+                bookMark = "javascript:(function(d,src){\
+                        var s=document.createElement('script');\
+                    s.setAttribute('type','text/javascript');\
+                    s.src=src;\
+                    d.getElementsByTagName('head')[0].appendChild(s);\
+                    s.onreadystatechange = function(){\
+                        if(s.readyState=='complete'){}};\
+                    })(document,'" + scriptUri + "');";
+            //alert(scriptUri);
+            document.getElementsByTagName("a")[0].href = bookMark;
+        }
+    </script>
+</head>
+<body>
+    <!-- TODO: change URL of deployed application -->
+    Add this link to your favorites
+    <a href=".">Page Analyzer</a>
+    Open page and click the bookmarked link.
+    Remove temporarily popup-blocker from tested site.
+    <span style="display:none"></span>
+</body>
+</html>
