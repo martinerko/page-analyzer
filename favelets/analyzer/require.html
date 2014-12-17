@@ -1,0 +1,36 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <title>RequireJS test</title>
+    <link href="./code2.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="progress">
+        Loading scripts... please wait</div>
+    <script type="text/javascript" src="../require.js"></script>
+    <script type="text/javascript">
+        var base = document.location.href + "/..";
+        var bodyScripts = [
+            base + "/../jquery-1.5b1.js"
+            , base + "/../jquery.ref.js"
+            , base + "/../jquery.ba-urlinternal.js"
+        //, "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.js"
+            , base + "/../modernizr.beta.js"
+            , base + "/code2.js"
+            ].reverse();
+
+        function loadNext() {
+            var next = bodyScripts.pop();
+            if (next) {
+                require([next], function () {
+                    setTimeout(loadNext, 0);
+                });
+            }
+            else {
+                alert("all done");
+            }
+        }
+        loadNext();
+    </script>
+</body>
+</html>
