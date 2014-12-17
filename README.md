@@ -7,7 +7,7 @@ Implemented  as bookmarklet (or favelet if you want).
 
 ## Try
 
-Go to [install page](http://ainthek.github.io/page-analyzer/favelets/analyzer/install.html)
+Go to [install page](https://ainthek.github.io/page-analyzer/favelets/analyzer/install.html)
 
 ## Currently supported detectors (mixed)
 
