@@ -117,13 +117,16 @@
             var strDocType = typeof docOrString == "string"
                 ? docOrString
                 : docTypeFromDom(docOrString);
+
+            var ret;    
+            
             if (strDocType) {
                 var w3cDtd = strDocType.match(/^\<\!DOCTYPE\s+HTML\s+PUBLIC\s+\"-\/\/W3C\/\/DTD\s+([\s\S]+?)\/\//i),
                 isHTML5 = /<\!DOCTYPE\s+HTML\s*\>/i.test(strDocType);
 
                 w3cDtd = w3cDtd && w3cDtd[1] ? w3cDtd[1] : "";
 
-                var ret = {
+                ret = {
                     w3cDtd: w3cDtd,
 
                     isHTML: isHTML5 || /^HTML/i.test(w3cDtd),
@@ -138,8 +141,9 @@
                     toString: function () { return strDocType; }
                 };
             }
-            else
+            else{
                 ret = null;
+            }
             return ret;
         };
         return _docType;
@@ -169,6 +173,7 @@
             }
         }
         function traverse(node, cache, level) {
+            /*jshint expr:true */
             level || (level = 0);
             node = node.firstChild;
             var nodeType;
@@ -415,7 +420,8 @@
                         headers = xhr.getAllResponseHeaders();
                     }
                 });
-                headers || (headers = ""); // TODO: error handling na access denied v jQuery ?
+                /*jshint expr:true */
+                headers || (headers = ""); // TODO: error handling for access denied in jQuery ?
                 return headers.split(/\r?\n/);
             },
             getInlineHandlers: function () {
@@ -494,7 +500,7 @@
 
                 var dt = _dp.getDocType(), //object 
                     dtStr = dt != null ? dt.toString() : "",
-                    msgs, w3c;
+                    msgs;
 
                 if (!dt) {
                     msgs = [msg(2, "No DOCTYPE detected ?")];
@@ -502,8 +508,8 @@
                 else {
                     if (dt.isHTML5)
                         msgs = [msg(0, str("HTML5 DOCTYPE detected: %0", [dtStr]), [dtStr])];
-                    else if (w3c = dt.w3cDtd) {
-                        msgs = [msg(0, str("W3C DTD detected: %0", [w3c]), [dtStr])];
+                    else if (dt.w3cDtd) {
+                        msgs = [msg(0, str("W3C DTD detected: %0", [dt.w3cDtd]), [dtStr])];
                     }
                     else {
                         msgs = [msg(1, str("Unknown DOCTYPE detected: %0", [dtStr]), [dtStr])];
@@ -743,7 +749,7 @@
                 var c, countOfConventions = 0, conventions = detectConventions(uniqueClassNames);
                 for (c in conventions) if (conventions[c]) countOfConventions++;
                 // "neutral" names are consistent with all conventions
-                if (conventions["neutral"] && countOfConventions > 1) countOfConventions--;
+                if (conventions.neutral && countOfConventions > 1) countOfConventions--;
 
                 if (countOfConventions > 1)
                     msgs.push(msg(countOfConventions > 2 ? 1 : 0, str("Inconsistent class naming conventions, %0 different conventions found", [countOfConventions])));
@@ -782,7 +788,7 @@
             },
             "Inline Styles": function () {
                 return [msg(0, "NOT IMPLEMENTED")];
-                
+                /*
                 var what = _dp.getInlineStyles(), of = _dp.countBodyAll(),
                 perc = Math.ceil(what.length * 100 / of),
                 // TODO: nicer ?
@@ -793,13 +799,15 @@
                 }
                 (uniques = unique(uniques)); //.sort();
                 msgs = [
-                    msg(perc > 33 /*  || idsLength > 1024*/ ? 1 : 0, str("%0% of elements (%1/%2) has inline style (%3 bytes overhead)", [perc, what.length, of, overhead]), what)
+                    // || idsLength > 1024
+                    msg(perc > 33  ? 1 : 0, str("%0% of elements (%1/%2) has inline style (%3 bytes overhead)", [perc, what.length, of, overhead]), what)
                 //, msg(0, str("%0 unique inline styles found", [uniques.length])) //TODO: level
                 ];
                 // TODO: how to detect incorrect style strings ? aka style="foobar" ?
                 if (uniques.length != what.length)
                     msgs.push(msg(1, str("Some Duplicate inline styles found, all:%0, unique:%1", [what.length, uniques.length])));
                 return msgs;
+                */
             },
             "Inline Event Handlers": function () {
                 //return [msg(0, "NOT IMPLEMENTED")];
@@ -827,7 +835,7 @@
                 for (var i = 0; i < what.length; i++) {
                     contentLength += what[i].length;
                 }
-                return msgs = [
+                return [
                 //msg(what.length == 0 ? 0 : contentLength < 1000 ? 1 : 2,
                     msg(what.length === 0 ? 0 : what.length < 5 ? 1 : 1, // TODO: deper analysis of size, position etc... just warn now
                         str("%0 inline scripts found (%1 bytes of code is inline in the page)", [what.length, contentLength]), []/*what*/)
@@ -838,13 +846,13 @@
         var semantics = {
             "Languages": function () {
                 var what = _dp.getLanguages();
-                return msgs = [
+                return [
                     msg(what.length === 0 ? 2 : 0, str("%0 lang attributes found", [what.length]), what)
                 ];
             },
             "H37 - Using alt attributes on img elements": function () {
                 var what = _dp.imagesWithoutAlt(), all = _dp.getTagCount("IMG");
-                return msgs = [
+                return [
                     msg(what.length !== 0 ? 2 : 0, str("%0 images (%0/%1) without alt found", [what, all]), [])
                 ];
             }
