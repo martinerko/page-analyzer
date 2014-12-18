@@ -3,9 +3,11 @@
 
 
     function str(that, params) {
-        return that.replace(/\%([0-9]+)/gm, function (a, b) { return params[parseInt(b)]; });
-    };
+        return that.replace(/\%([0-9]+)/gm, function (a, b) { return params[parseInt(b,10)]; });
+    }
+
     var enc = (function () {
+        // TODO: dry, publish enc library one day (see a.in.the.k on blogspot)
         // performance is 78ms on MSIE 7 (the slowest one)
         // on 80KB html markup from: http://www.w3.org/TR/html4/
         var re = new RegExp(
@@ -27,7 +29,7 @@
          };
         return function (s) {
             return s.replace(re, enc);
-        }
+        };
     } ());
     function unique(arr) {
         var r = [], h = {}, p, i;
@@ -67,7 +69,7 @@
             var r = {}, l;
             for (l = arr.length; l; ) r[arr[--l]] = true;
             return r;
-        };
+        }
         var deprecated_HTML4 = makeHash("APPLET,BASEFONT,CENTER,DIR,FONT,ISINDEX,MENU,S,STRIKE,U".split(",")),
             deprecated_HTML5 = makeHash("ACRONYM,APPLET,BASEFONT,BIG,CENTER,DIR,FONT,FRAME,FRAMESET,ISINDEX,MARQUEE,NOFRAMES,S,STRIKE,TT,U,XMP".split(","));
         return function (tagName) {
@@ -86,7 +88,7 @@
                 + (dt.systemId ? " \"" + dt.systemId + "\"" : "")
                 + ">";
             return r;
-        };
+        }
         /**
         return "" if no doctype detected 
         before first Element node.
@@ -165,7 +167,7 @@
             else {
                 return tc;
             }
-        };
+        }
         function traverse(node, cache, level) {
             level || (level = 0);
             node = node.firstChild;
@@ -200,14 +202,14 @@
                 }
                 node = node.nextSibling;
             }
-        };
+        }
         function fix(cache) {
             // MSIE incorrectly considers DOCTYPE as comment
             var comments = cache.comments;
             if (comments[0] && comments[0].indexOf("DOCTYPE ") == 0)
                 comments.shift();
             //MSIE counts /LINK as tag in XHTML/HTML bad formated    
-        };
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
         function d() { return wnd.document; }
@@ -218,7 +220,7 @@
         function getAttribute(that, attrName) {
             var a = that.attributes && that.attributes.getNamedItem(attrName); //TODO: vs. getAttributeNode performance test !
             return a != null ? a.nodeValue : null;
-        };
+        }
         var HANDLER_NAMES = (function () {
             return ["onclick", "onload"]; //two usual until good method found
 
@@ -251,7 +253,7 @@
         function externalScripts(acceptSubdomains) {
 
             if (acceptSubdomains)
-                $.urlInternalHost("[^/?#]*", "www")
+                $.urlInternalHost("[^/?#]*", "www");
             else
                 $.urlInternalHost("www");
             var uri, uris = [], i, e, es;
@@ -384,7 +386,7 @@
                     s = $(e).attr("style"); //more quircks , hence jQuery
                     //s=e.getAttribute("style"); //TODO:: include/detect incorrect style strings ?
                     if (s) r.push(s);
-                };
+                }
                 return r;
             },
             getHeaders: function () {
@@ -412,7 +414,7 @@
                     error: function (xhr) {
                         headers = xhr.getAllResponseHeaders();
                     }
-                })
+                });
                 headers || (headers = ""); // TODO: error handling na access denied v jQuery ?
                 return headers.split(/\r?\n/);
             },
@@ -476,13 +478,13 @@
             }
         };
         return that;
-    };
+    }
     function analyzer(dataProvider) {
         var _dp = dataProvider;
         var levels = ["info", "warning", "error"];
 
-        function info(msg, extra) { return { status: "info", msg: msg, extra: extra} };
-        function msg(level, msg, extra) { return { status: levels[level] || levels[levels.length - 1], msg: msg, extra: extra} };
+        function info(msg, extra) { return { status: "info", msg: msg, extra: extra}; }
+        function msg(level, msg, extra) { return { status: levels[level] || levels[levels.length - 1], msg: msg, extra: extra} ;}
         var general = {
             "Analyzed document": function () {
                 //TODO: analyze URL for extensions, query etc....
@@ -571,7 +573,7 @@
                     src = "HTTP headers";
                 }
                 else {
-                    cl = _dp._d().body.innerHTML.length
+                    cl = _dp._d().body.innerHTML.length;
                     src = "serialized DOM ";
                 }
                 return [msg(cl < 50 * 1024 ? 0 : cl < 100 * 1024 ? 1 : 2, str("Size calculated from %1 is: %0", [cl, src]))];
@@ -839,7 +841,7 @@
                     msg(what.length == 0 ? 2 : 0, str("%0 lang attributes found", [what.length]), what)
                 ];
             },
-            "H37: Using alt attributes on img elements": function () {
+            "H37 - Using alt attributes on img elements": function () {
                 var what = _dp.imagesWithoutAlt(), all = _dp.getTagCount("IMG");
                 return msgs = [
                     msg(what.length != 0 ? 2 : 0, str("%0 images (%0/%1) without alt found", [what, all]), [])
@@ -856,7 +858,7 @@
             ,
             "Semantics & Accessibility": semantics
         };
-    };
+    }
     function renderAll(results) {
         var html = "";
         for (var sectionName in results) {
@@ -880,7 +882,7 @@
                 html += "</ul>";
             }
             return html;
-        };
+        }
 
         var templ = "<section><h2>%0</h2>%1<footer>time: %2 ms</footer></section>",
         name, html = "";
@@ -889,7 +891,7 @@
             html += str(templ, [name, ul(r), r._time]);
         }
         return html;
-    };
+    }
     function onload() {
         function measuringDelegate(ctx, f) {
             var that = function () {
@@ -897,7 +899,7 @@
                 r = f.apply(ctx, arguments);
                 that._time = new Date().valueOf() - d1;
                 return r;
-            }
+            };
             return that;
         }
         function run() {
@@ -945,7 +947,7 @@
         $(".progress").html("Running analysis...please wait");
         setTimeout(run, 100);
         //run();
-    };
+    }
 
     onload();
 
