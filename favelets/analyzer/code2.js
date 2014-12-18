@@ -206,7 +206,7 @@
         function fix(cache) {
             // MSIE incorrectly considers DOCTYPE as comment
             var comments = cache.comments;
-            if (comments[0] && comments[0].indexOf("DOCTYPE ") == 0)
+            if (comments[0] && comments[0].indexOf("DOCTYPE ") === 0)
                 comments.shift();
             //MSIE counts /LINK as tag in XHTML/HTML bad formated    
         }
@@ -483,8 +483,8 @@
         var _dp = dataProvider;
         var levels = ["info", "warning", "error"];
 
-        function info(msg, extra) { return { status: "info", msg: msg, extra: extra}; }
-        function msg(level, msg, extra) { return { status: levels[level] || levels[levels.length - 1], msg: msg, extra: extra} ;}
+        function info(txt, extra) { return { status: "info", txt: txt, extra: extra}; }
+        function msg(level, txt, extra) { return { status: levels[level] || levels[levels.length - 1], txt: txt, extra: extra} ;}
         var general = {
             "Analyzed document": function () {
                 //TODO: analyze URL for extensions, query etc....
@@ -714,9 +714,9 @@
                 }
                 var unCondCount = what.length - conditionalCount;
                 var msgs = [
-                    msg(unCondCount == 0 ? 0 : contentLength < 1000 ? 1 : 2,
+                    msg(unCondCount === 0 ? 0 : contentLength < 1000 ? 1 : 2,
                         str("%0 comments found (%1 bytes)", [unCondCount, contentLength]), what),
-                    msg(conditionalCount == 0 ? 0 : 1,
+                    msg(conditionalCount === 0 ? 0 : 1,
                         str("%0 MSIE conditional comments found", [conditionalCount]), []) //this is n/a in MSIE
                 ];
                 return msgs;
@@ -782,6 +782,7 @@
             },
             "Inline Styles": function () {
                 return [msg(0, "NOT IMPLEMENTED")];
+                
                 var what = _dp.getInlineStyles(), of = _dp.countBodyAll(),
                 perc = Math.ceil(what.length * 100 / of),
                 // TODO: nicer ?
@@ -828,7 +829,7 @@
                 }
                 return msgs = [
                 //msg(what.length == 0 ? 0 : contentLength < 1000 ? 1 : 2,
-                    msg(what.length == 0 ? 0 : what.length < 5 ? 1 : 1, // TODO: deper analysis of size, position etc... just warn now
+                    msg(what.length === 0 ? 0 : what.length < 5 ? 1 : 1, // TODO: deper analysis of size, position etc... just warn now
                         str("%0 inline scripts found (%1 bytes of code is inline in the page)", [what.length, contentLength]), []/*what*/)
                 ];
             }
@@ -838,13 +839,13 @@
             "Languages": function () {
                 var what = _dp.getLanguages();
                 return msgs = [
-                    msg(what.length == 0 ? 2 : 0, str("%0 lang attributes found", [what.length]), what)
+                    msg(what.length === 0 ? 2 : 0, str("%0 lang attributes found", [what.length]), what)
                 ];
             },
             "H37 - Using alt attributes on img elements": function () {
                 var what = _dp.imagesWithoutAlt(), all = _dp.getTagCount("IMG");
                 return msgs = [
-                    msg(what.length != 0 ? 2 : 0, str("%0 images (%0/%1) without alt found", [what, all]), [])
+                    msg(what.length !== 0 ? 2 : 0, str("%0 images (%0/%1) without alt found", [what, all]), [])
                 ];
             }
 

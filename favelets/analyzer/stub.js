@@ -13,7 +13,7 @@
         // TODO: study more
         var markup =
             '<!DOCTYPE HTML>\
-				<html><head><title>Page Analyzer version 6.10.7</title> \
+				<html><head><title>Page Analyzer version 6.10.8</title> \
                 <link href="' + base + '/code2.css" rel="stylesheet"/>\
                 </head><body>\
                 <div class="progress">Loading scripts... please wait</div>\
