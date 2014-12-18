@@ -489,8 +489,8 @@
         var _dp = dataProvider;
         var levels = ["info", "warning", "error"];
 
-        function info(txt, extra) { return { status: "info", txt: txt, extra: extra}; }
-        function msg(level, txt, extra) { return { status: levels[level] || levels[levels.length - 1], txt: txt, extra: extra} ;}
+        function info(txt, extra) { return { status: "info", msg: txt, extra: extra}; }
+        function msg(level, txt, extra) { return { status: levels[level] || levels[levels.length - 1], msg: txt, extra: extra} ;}
         var general = {
             "Analyzed document": function () {
                 //TODO: analyze URL for extensions, query etc....
