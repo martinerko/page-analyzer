@@ -485,7 +485,8 @@
             },
             frameworks: function(){
                 var ret=[];
-                wnd.dojo && ret.push("dojo - "+wnd.dojo.version);
+                wnd.dojo && ret.push("dojo - " + wnd.dojo.version);
+                wnd.jQuery && wnd.jQuery.fn.jquery && ret.push("jQuery - " + wnd.jQuery.fn.jquery );
                 return ret;
             }
         };
