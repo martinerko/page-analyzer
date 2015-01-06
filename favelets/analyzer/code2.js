@@ -160,6 +160,7 @@
             , imagesWithoutAlt: [] //H37: Using alt attributes on img elements
             , nestingLevels: []
         };
+
         function traversed(rescan) {
             if (!tc || rescan) {
                 tc = $.extend({}, traverseCacheBluePrint);
@@ -481,6 +482,11 @@
                     if (!e.src) ret.push(e.textContent || e.text);
                 }
                 return ret;
+            },
+            frameworks: function(){
+                var ret=[];
+                wnd.dojo && ret.push("dojo - "+wnd.dojo.version);
+                return ret;
             }
         };
         return that;
@@ -491,6 +497,7 @@
 
         function info(txt, extra) { return { status: "info", msg: txt, extra: extra}; }
         function msg(level, txt, extra) { return { status: levels[level] || levels[levels.length - 1], msg: txt, extra: extra} ;}
+        
         var general = {
             "Analyzed document": function () {
                 //TODO: analyze URL for extensions, query etc....
@@ -858,6 +865,14 @@
             }
 
         };
+        var frameworks = {
+            "Detected JS Frameworks": function(){
+                var what = _dp.frameworks();
+                return [
+                    msg(0, str("%0 frameworks (%0) detected", [what.length]), what)
+                ]; 
+            }
+        };
         return {
             "General Info": general
             ,
@@ -866,6 +881,8 @@
             "Security": security
             ,
             "Semantics & Accessibility": semantics
+            ,
+            "Frameworks": frameworks
         };
     }
     function renderAll(results) {
