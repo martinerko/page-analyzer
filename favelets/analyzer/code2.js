@@ -488,7 +488,7 @@
                 wnd.dojo && ret.push("dojo - " + wnd.dojo.version);
                 wnd.jQuery && wnd.jQuery.fn.jquery && ret.push("jQuery - " + wnd.jQuery.fn.jquery );
                 wnd.angular && wnd.angular.version && ret.push("angular - " + wnd.angular.version.full );
-                wnd.Prototype && ret.push("Prototype - " + Prototype.Version);
+                wnd.Prototype && ret.push("Prototype - " + wnd.Prototype.Version);
                 return ret;
             }
         };
