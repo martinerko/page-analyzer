@@ -256,19 +256,15 @@
             //            // others ?
             //            return ret;
         })();
-        function externalScripts(acceptSubdomains) {
+        function externalScripts(filter) {
 
-            if (acceptSubdomains)
-                $.urlInternalHost("[^/?#]*", "www");
-            else
-                $.urlInternalHost("www");
             var uri, uris = [], i, e, es;
             for (es = d().getElementsByTagName("SCRIPT"), i = es.length; i; ) {
                 e = es[--i];
                 //uri = $.ref(e, "src");
                 uri = e.src;
                 if (!isStub(uri)) {
-                    if (uri && !$.isUrlInternal(uri)) {
+                    if (uri && (filter==null || !filter(uri))) {
                         uris.push(uri);
                     }
                 }
@@ -312,12 +308,27 @@
             links: function () {
                 return d().getElementsByTagName("SCRIPT");
             },
+            getInlineScripts: function () {
+                // TODO: dry with external, use map, filter instead of loops (from jQuery)
+                var ret = [], es, e, i;
+                for (es = d().getElementsByTagName("SCRIPT"), i = es.length; i; ) {
+                    e = es[--i];
+                    if (!e.src) ret.push(e.textContent || e.text);
+                }
+                return ret;
+            },
+            externalScripts:function(){
+                return externalScripts(); //no filter
+            },
             externalHostScripts: function () {
-                return externalScripts(false);
+                $.urlInternalHost("www"); //setup filter
+                return externalScripts($.isUrlInternal); //use filter
 
             },
             externalDomainScripts: function () {
-                return externalScripts(true);
+                
+                $.urlInternalHost("[^/?#]*", "www");
+                return externalScripts($.isUrlInternal);
             },
             uriReferences: function () {
                 //                                var doc = d(),
@@ -475,14 +486,6 @@
             imagesWithoutAlt: function () {
                 return traversed().imagesWithoutAlt;
             },
-            getInlineScripts: function () {
-                var ret = [], es, e, i;
-                for (es = d().getElementsByTagName("SCRIPT"), i = es.length; i; ) {
-                    e = es[--i];
-                    if (!e.src) ret.push(e.textContent || e.text);
-                }
-                return ret;
-            },
             frameworks: function(){
                 var ret=[];
                 wnd.dojo && ret.push("dojo - " + wnd.dojo.version);
@@ -615,7 +618,7 @@
                     msg(!l ? 0 : 2, str("%0 Sensitive Script Accessible Cookies", [l]), cookies)
                 ];
             },
-            "External Scripts": function () {
+            "External Scripts (Domain, Host)": function () {
                 var what = _dp.externalHostScripts(); //still not tested for ports
                 var msgs = [msg(what.length ? 1 : 0, str("%0 Scripts Pointing outside of your host has been found"
                     , [what.length]), what)
@@ -850,6 +853,13 @@
                     msg(what.length === 0 ? 0 : what.length < 5 ? 1 : 1, // TODO: deper analysis of size, position etc... just warn now
                         str("%0 inline scripts found (%1 bytes of code is inline in the page)", [what.length, contentLength]), []/*what*/)
                 ];
+            },
+            "External Scripts" : function() {
+               var what = _dp.externalScripts();
+               return [
+                   msg(what.length < 10 ? 0 : 1, // more than 10 scripts is overkill
+                        str("%0 external scripts found", [what.length]), what)      
+               ]; 
             }
 
         };
