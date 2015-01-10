@@ -487,6 +487,7 @@
                 return traversed().imagesWithoutAlt;
             },
             frameworks: function(){
+                /*jshint expr:true */ 
                 var ret=[];
                 wnd.dojo && ret.push("dojo - " + wnd.dojo.version);
                 wnd.jQuery && wnd.jQuery.fn.jquery && ret.push("jQuery - " + wnd.jQuery.fn.jquery );
@@ -599,6 +600,18 @@
                 return [msg(cl < 50 * 1024 ? 0 : cl < 100 * 1024 ? 1 : 2, str("Size calculated from %1 is: %0", [cl, src]))];
             }
         };
+        /*
+        var analytics={
+            "Analytics Scripts Detected": function(){
+                TODO:
+                www.google-analytics.com/ga.js
+            }
+        };
+        var social={
+
+            twitter, facebook, linked in
+        }
+        */
         var security = {
             "Script Accessible Cookies": function () {
                 var what = _dp.cookies(), l = what.length;
