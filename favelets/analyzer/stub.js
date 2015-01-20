@@ -13,7 +13,7 @@
         // TODO: study more
         var markup =
             '<!DOCTYPE HTML>\
-				<html><head><title>Page Analyzer version 6.11.7</title> \
+				<html><head><title>Page Analyzer version 6.12.1</title> \
                 <link href="' + base + '/code2.css" rel="stylesheet"/>\
                 </head><body>\
                 <div class="progress">Loading scripts... please wait</div>\
@@ -22,7 +22,7 @@
                     function ready(){\
                         $LAB.setGlobalDefaults({ UsePreloading: false });\
                         $LAB\
-                        .script("' + base + "/../jquery-1.5b1.js" + '").wait()\
+                        .script("' + base + "/../jquery-1.5.js" + '").wait()\
                         .script("' + base + "/../jquery.ref.js" + '")\
                         .script("' + base + "/../jquery.ba-urlinternal.js" + '")\
                         .script("' + base + "/../modernizr.beta.js" + '").wait()\
