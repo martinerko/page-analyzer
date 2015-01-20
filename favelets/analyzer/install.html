@@ -12,7 +12,7 @@
                 return b;
             };
             // TODO: elmiminate double inject (call method if inserted)
-            var scriptUri = getBaseUri() + "/stub.js",
+            var scriptUri = getBaseUri() + "/stub.js?"+new Date().valueOf(),
                 bookMark = "javascript:(function(d,src){\
                         var s=document.createElement('script');\
                     s.setAttribute('type','text/javascript');\
