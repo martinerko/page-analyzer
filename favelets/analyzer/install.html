@@ -3,27 +3,29 @@
 <head>
     <title>Favlet Instalation</title>
     <script type="text/javascript">
-        window.onload = function () {
+    window.onload = function() {
 
-            function getBaseUri() {
-                //naive, but enough for now
-                var l = window.location.href, f = l.hash || "", h = l.href,
-                b = l.substring(0,l.length - f.length).split("/").slice(0, -1).join("/");
-                return b;
-            };
-            // TODO: elmiminate double inject (call method if inserted)
-            var scriptUri = getBaseUri() + "/stub.js?"+new Date().valueOf(),
-                bookMark = "javascript:(function(d,src){\
-                        var s=document.createElement('script');\
-                    s.setAttribute('type','text/javascript');\
-                    s.src=src;\
-                    d.getElementsByTagName('head')[0].appendChild(s);\
-                    s.onreadystatechange = function(){\
-                        if(s.readyState=='complete'){}};\
-                    })(document,'" + scriptUri + "');";
-            //alert(scriptUri);
-            document.getElementsByTagName("a")[0].href = bookMark;
-        }
+        function getBaseUri() {
+            //naive, but enough for now
+            var l = window.location.href,
+                f = l.hash || "",
+                h = l.href,
+                b = l.substring(0, l.length - f.length).split("/").slice(0, -1).join("/");
+            return b;
+        };
+        // TODO: elmiminate double inject (call method if inserted)
+        var scriptUri = getBaseUri() + "/stub.js",
+            bookMark = "javascript:(function(d,src){" + //
+            "var s=document.createElement('script');" + //
+            "s.setAttribute('type','text/javascript');" //
+            + "s.src=src+'?'+new Date().valueOf();" //
+            + "d.getElementsByTagName('head')[0].appendChild(s);" //
+            + "s.onreadystatechange = function(){" //
+            + "    if(s.readyState=='complete'){}};" //
+            + "})(document,'" + scriptUri + "');";
+        //alert(scriptUri);
+        document.getElementsByTagName("a")[0].href = bookMark;
+    }
     </script>
 </head>
 <body>
