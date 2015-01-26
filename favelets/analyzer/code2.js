@@ -494,7 +494,7 @@
                 wnd.angular && wnd.angular.version && ret.push("angular - " + wnd.angular.version.full );
                 wnd.Prototype && ret.push("Prototype - " + wnd.Prototype.Version);
                 wnd.Modernizr && ret.push("Modernizr - " + wnd.Modernizr._version);
-
+                wnd.Meteor && ret.push("Meteor - " + wnd.Meteor.release);
                 // TODO: wordpress based on scripts.filter(/wp-content/) or other detection (see OWASP as well)
                 return ret;
             }
