@@ -221,7 +221,7 @@
         function d() { return wnd.document; }
         function isStub(src) {
             //TODO: better !
-            return /stub\.js$/.test(src);
+            return /stub\.js/.test(src);
         }
         function getAttribute(that, attrName) {
             var a = that.attributes && that.attributes.getNamedItem(attrName); //TODO: vs. getAttributeNode performance test !
