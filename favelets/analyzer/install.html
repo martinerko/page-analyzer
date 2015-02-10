@@ -12,7 +12,7 @@
                 h = l.href,
                 b = l.substring(0, l.length - f.length).split("/").slice(0, -1).join("/");
             return b;
-        };
+        }
         // TODO: elmiminate double inject (call method if inserted)
         var scriptUri = getBaseUri() + "/stub.js",
             bookMark = "javascript:(function(d,src){" + //
@@ -25,7 +25,7 @@
             + "})(document,'" + scriptUri + "');";
         //alert(scriptUri);
         document.getElementsByTagName("a")[0].href = bookMark;
-    }
+    };
     </script>
 </head>
 <body>

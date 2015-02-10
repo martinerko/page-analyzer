@@ -1,4 +1,5 @@
-﻿(function () {
+﻿
+(function () {
 
 
 
@@ -121,7 +122,7 @@
             var ret;    
             
             if (strDocType) {
-                var w3cDtd = strDocType.match(/^\<\!DOCTYPE\s+HTML\s+PUBLIC\s+\"-\/\/W3C\/\/DTD\s+([\s\S]+?)\/\//i),
+                var w3cDtd = strDocType.match(/^<\!DOCTYPE\s+HTML\s+PUBLIC\s+\"-\/\/W3C\/\/DTD\s+([\s\S]+?)\/\//i),
                 isHTML5 = /<\!DOCTYPE\s+HTML\s*\>/i.test(strDocType);
 
                 w3cDtd = w3cDtd && w3cDtd[1] ? w3cDtd[1] : "";
@@ -157,14 +158,14 @@
             , tagCounter: 0
             , tagStatistics: {}
             , languages: []
-            , imagesWithoutAlt: [] //H37: Using alt attributes on img elements
+            , imagesWithoutAlt: 0//H37: Using alt attributes on img elements
             , nestingLevels: []
         };
 
         function traversed(rescan) {
+           
             if (!tc || rescan) {
                 tc = $.extend({}, traverseCacheBluePrint);
-
                 traverse(d(), tc);
                 fix(tc);
                 return tc;
