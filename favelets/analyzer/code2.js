@@ -930,7 +930,7 @@
                 var what = _dp.imagesWithoutAlt(),
                     all = _dp.getTagCount("IMG");
                 return [
-                    msg(what.length !== 0 ? 2 : 0, str("%0 images (%0/%1) without alt found", [what, all]), [])
+                    msg(what !== 0 ? 2 : 0, str("%0 images (%0/%1) without alt found", [what, all]), [])
                 ];
             }
 
