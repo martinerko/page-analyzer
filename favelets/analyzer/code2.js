@@ -946,6 +946,7 @@
         var seo = {
             "Description": function() {
                 var descs = [];
+                var rets = [];
                 var metas = _dp._d().getElementsByTagName("META");
 
                 for (var i = 0, l = metas.length; i < l; i++) {
@@ -953,7 +954,15 @@
                         descs.push(str("META %1 %0", [metas[i].content, metas[i].name]));
                     }
                 }
-                return descs.length ? [msg(0, "META description found", descs)] : [msg(1, "NO META description found")];
+
+                rets.push(descs.length ? msg(0, "META description found", descs) : msg(1, "NO META description found"));
+
+                if (descs.length) {
+                    var d = descs[0];
+                    //alert('aaa');
+                    rets.push(msg(d.length >= 150 && d.length <= 160 ? 0 : 1, str("META description length: %0", [d.length])));
+                }
+                return rets;
             }
         };
         return {
