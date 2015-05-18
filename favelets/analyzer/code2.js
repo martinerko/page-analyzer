@@ -959,7 +959,7 @@
 
                 if (descs.length) {
                     var d = descs[0];
-                    //alert('aaa');
+                    //https://moz.com/learn/seo/meta-description
                     rets.push(msg(d.length >= 150 && d.length <= 160 ? 0 : 1, str("META description length: %0", [d.length])));
                 }
                 return rets;
