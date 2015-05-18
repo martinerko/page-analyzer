@@ -963,6 +963,10 @@
                     rets.push(msg(d.length >= 150 && d.length <= 160 ? 0 : 1, str("META description length: %0", [d.length])));
                 }
                 return rets;
+            },
+            // TODO: https://developers.google.com/structured-data/
+            "JSON-LD": function() {
+                //detect scripts with application/ld+json
             }
         };
         return {
