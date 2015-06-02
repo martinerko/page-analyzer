@@ -967,6 +967,7 @@
             // TODO: https://developers.google.com/structured-data/
             "JSON-LD": function() {
                 //detect scripts with application/ld+json
+                return [];
             }
         };
         return {
