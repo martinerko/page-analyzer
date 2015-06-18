@@ -515,6 +515,8 @@
                 wnd.Meteor && ret.push("Meteor - " + wnd.Meteor.release);
                 wnd.React && ret.push("React - " + wnd.React.version);
                 wnd.Backbone && ret.push("Backbone - " + wnd.Backbone.VERSION);
+                wnd._ && ret.push("Underscore - " + wnd._.VERSION);
+                 
                 // TODO: wordpress based on scripts.filter(/wp-content/) or other detection (see OWASP as well)
                 return ret;
             }
