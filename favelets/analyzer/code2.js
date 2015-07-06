@@ -383,7 +383,9 @@
                     e = all[--i];
 
                     if ((cn = e.className)) { //TODO:vs getAttribute ?
-                        r.push(cn);
+                        if(typeof cn === 'string') {
+                            r.push(cn);
+                        }
                     }
                 }
                 return r;
