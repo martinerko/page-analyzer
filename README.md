@@ -32,11 +32,10 @@ Go to [install page](https://gratex.github.io/page-analyzer/favelets/analyzer/in
 - Inline Scripts
 - Languages
 - H37 - Using alt attributes on img elements
-
+- .... see source code please
 
 ## History
-Horror code. This is one of my very very old projects.
-Some of the code looks like it looks like since this seemed to run in IS 7 (or maybe even IE6) once.
+Horror code. This is one of my (ainthek) very very old projects. Was supporting also IE 5,6,7 in the dark ages (not all history committed here).
 
 ## Future
 Rewrite, reuse other algorithms, and add more detections, support node.js server side usage as well.
