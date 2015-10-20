@@ -561,7 +561,7 @@
             analytics: function(){
                 var g=that.globals();
                 var r=[];
-                (g.GoogleAnalyticsObject || g.ga || g.gaGlobal) && r.push("GoogleAnalyticsObject");
+                (g.GoogleAnalyticsObject || g.ga || g.gaGlobal) && r.push("GoogleAnalytics");
                 return r;
             }
         };
