@@ -561,7 +561,14 @@
             analytics: function(){
                 var g=that.globals();
                 var r=[];
-                (g.GoogleAnalyticsObject || g.ga || g.gaGlobal) && r.push("GoogleAnalytics");
+                for(var k in g.globals){
+                    if (g.GoogleAnalyticsObject || g.ga || g.gaGlobal) {
+                        r.push("GoogleAnalytics");
+                    }
+                    else if(k.indexOf("gemius")!==-1){
+                        r.push("Gemius");
+                    }
+                }
                 return r;
             }
         };
