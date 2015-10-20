@@ -574,7 +574,10 @@
                         r["Google Ad - Conversion Tracking"] = 1;
                     } else if (k.indexOf("ClickTale") !== -1) {
                         r["ClickTale"] = 1;
+                    } else if (k.indexOf("Tynt") !== -1) {
+                        r["Tynt"] = 1;
                     }
+
                 }
                 // TODO: uniq
                 return Object.keys(r); // TODO: < es5
