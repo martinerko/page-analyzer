@@ -570,6 +570,8 @@
                         r.storm = 1;
                     } else if (k.indexOf("google_ad") !== -1) {
                         r["Google Ad"] = 1;
+                    } else if (k.indexOf("google_conversion")!==-1){
+                        r["Google Ad - Conversion Tracking"] = 1;
                     }
                 }
                 // TODO: uniq
