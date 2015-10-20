@@ -524,9 +524,8 @@
                 var g = that.globals();
                 var r = {};
                 for (var k in g) {
-                    if (k.indexOf("dw_") !== -1 || k.indexOf("ghmxy_") !== -1) {
-                        r['Dynamic Web Coding at www.dyn-web.com'] = 1;
-
+                    if (k.indexOf("dw_") !== -1) {
+                        r['Dynamic Web Coding at www.dyn-web.com - ver. ????'] = 1;
                     }
                 }
                 ret.concat(Object.keys(r)); // TODO: < es5
