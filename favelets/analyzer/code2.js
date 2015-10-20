@@ -558,14 +558,13 @@
                 tmp.parentNode.removeChild(tmp);
                 return differences;
             },
-            analytics: function(){
-                var g=that.globals();
-                var r=[];
-                for(var k in g.globals){
-                    if (g.GoogleAnalyticsObject || g.ga || g.gaGlobal) {
+            analytics: function() {
+                var g = that.globals();
+                var r = [];
+                for (var k in g) {
+                    if (k === "GoogleAnalyticsObject" || k === "ga" || k === "gaGlobal") {
                         r.push("GoogleAnalytics");
-                    }
-                    else if(k.indexOf("gemius")!==-1){
+                    } else if (k.indexOf("gemius") !== -1) {
                         r.push("Gemius");
                     }
                 }
@@ -995,9 +994,9 @@
                     msg(0, str("%0 frameworks (%0) detected", [what.length]), what)
                 ];
             },
-            "Spyware (or Analytics ?)": function(){
+            "Spyware (or Analytics ?)": function() {
                 var what = _dp.analytics();
-                  return [
+                return [
                     msg(what.length === 0 ? 0 : what.length > 3 ? 2 : 1, str("%0 analytics detected", [what.length]), what)
                 ];
             },
