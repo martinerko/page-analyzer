@@ -530,7 +530,7 @@
                     globals = {},
                     ignoreList = [],
                     i = ignoreList.length,
-                    iframe = document.createElement('iframe');
+                    iframe = d().createElement('iframe');
                 while (i--) {
                     globals[ignoreList[i]] = 1;
                 }
@@ -541,7 +541,7 @@
                     };
                 }
                 iframe.style.display = 'none';
-                document.body.appendChild(iframe);
+                var tmp=d().body.appendChild(iframe);
                 iframe.src = 'about:blank';
                 iframe = iframe.contentWindow || iframe.contentDocument;
                 for (i in differences) {
@@ -553,6 +553,7 @@
                 while (--i) {
                     delete differences[exceptions[i]];
                 }
+                tmp.parentNode.removeChild(tmp);
                 return differences;
             }
         };
@@ -979,7 +980,9 @@
                     msg(0, str("%0 frameworks (%0) detected", [what.length]), what)
                 ];
             },
-            "Globals": function() { //TODO: move elsewhere
+            "Globals": function() { //TODO: move elsewhere ?
+                // it is here since in 2015 all globals are considered frameworks
+                // and not bugs :-))
                 // TODO: add build in override detection
                 var what = [];
                 for (var k in _dp.globals()) { //TODO: map
