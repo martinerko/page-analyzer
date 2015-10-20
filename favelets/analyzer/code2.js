@@ -522,7 +522,7 @@
                 wnd.Drupal && ret.push("Drupal.js - they have no version ?");
 
                 var g = that.globals(),
-                    r = [];
+                    r = {};
                 for (var k in g) {
                     if (k.indexOf("dw_") !== -1) {
                         r["Dynamic Web Coding at www.dyn-web.com"] = 1;
