@@ -518,6 +518,8 @@
                 wnd.React && ret.push("React - " + wnd.React.version);
                 wnd.Backbone && ret.push("Backbone - " + wnd.Backbone.VERSION);
                 wnd._ && ret.push("Underscore - " + wnd._.VERSION);
+                // https://www.drupal.org/node/304258
+                wnd.Drupal && ret.push("Drupal.js - they have no version ?");
 
                 // TODO: wordpress based on scripts.filter(/wp-content/) or other detection (see OWASP as well)
                 return ret;
@@ -555,6 +557,12 @@
                 }
                 tmp.parentNode.removeChild(tmp);
                 return differences;
+            },
+            analytics: function(){
+                var g=that.globals();
+                var r=[];
+                (g.GoogleAnalyticsObject || g.ga || g.gaGlobal) && r.push("GoogleAnalyticsObject");
+                return r;
             }
         };
         return that;
@@ -980,6 +988,12 @@
                     msg(0, str("%0 frameworks (%0) detected", [what.length]), what)
                 ];
             },
+            "Spyware (or Analytics ?)": function(){
+                var what = _dp.analytics();
+                  return [
+                    msg(what.length === 0 ? 0 : what.length > 3 ? 2 : 1, str("%0 analytics detected", [what.length]), what)
+                ];
+            },
             "Globals": function() { //TODO: move elsewhere ?
                 // it is here since in 2015 all globals are considered frameworks
                 // and not bugs :-))
@@ -989,7 +1003,7 @@
                     what.push(k);
                 }
                 return [
-                    msg(what.length == 0 ? 0 : what.length > 5 ? 2 : 1, str("%0 globals (%0) detected", [what.length]), what)
+                    msg(what.length === 0 ? 0 : what.length > 5 ? 2 : 1, str("%0 globals detected", [what.length]), what)
                 ];
             }
 
