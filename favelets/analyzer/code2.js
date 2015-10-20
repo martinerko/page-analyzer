@@ -521,16 +521,15 @@
                 // https://www.drupal.org/node/304258
                 wnd.Drupal && ret.push("Drupal.js - they have no version ?");
 
-                var g = that.globals(),
-                    r = {};
+                var g = that.globals();
+                var r = {};
                 for (var k in g) {
-                    if (k.indexOf("dw_") !== -1) {
-                        r["Dynamic Web Coding at www.dyn-web.com"] = 1;
+                    if (k.indexOf("dw_") !== -1 || k.indexOf("ghmxy_") !== -1) {
+                        r['Dynamic Web Coding at www.dyn-web.com'] = 1;
+
                     }
                 }
-                ret.concat(Object.keys(r));
-
-                // TODO: wordpress based on scripts.filter(/wp-content/) or other detection (see OWASP as well)
+                ret.concat(Object.keys(r)); // TODO: < es5
                 return ret;
             },
             globals: function() {
