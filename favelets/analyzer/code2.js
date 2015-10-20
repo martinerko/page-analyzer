@@ -69,7 +69,7 @@
                         "other": 0
                     };
                 for (; i;) {
-                    retObj[arr[--i].replace(re, not)] ++;
+                    retObj[arr[--i].replace(re, not)]++;
                 }
                 return retObj;
             };
@@ -94,15 +94,15 @@
     var docType = (function() {
 
         function doctypeToString(dt) {
-                // does not have to match source ,systemId added in FF
+            // does not have to match source ,systemId added in FF
 
-                var r = "<!DOCTYPE " + dt.name + (dt.publicId ? " PUBLIC \"" + dt.publicId + "\"" : "") + (dt.systemId ? " \"" + dt.systemId + "\"" : "") + ">";
-                return r;
-            }
-            /**
-            return "" if no doctype detected 
-            before first Element node.
-            **/
+            var r = "<!DOCTYPE " + dt.name + (dt.publicId ? " PUBLIC \"" + dt.publicId + "\"" : "") + (dt.systemId ? " \"" + dt.systemId + "\"" : "") + ">";
+            return r;
+        }
+        /**
+        return "" if no doctype detected 
+        before first Element node.
+        **/
 
         var docTypeFromDom = function(doc) {
             var node = doc.firstChild,
@@ -272,26 +272,26 @@
 
         function externalScripts(filter) {
 
-                var uri, uris = [],
-                    i, e, es;
-                for (es = d().getElementsByTagName("SCRIPT"), i = es.length; i;) {
-                    e = es[--i];
-                    //uri = $.ref(e, "src");
-                    uri = e.src;
-                    if (!isStub(uri)) {
-                        if (uri && (filter == null || !filter(uri))) {
-                            uris.push(uri);
-                        }
+            var uri, uris = [],
+                i, e, es;
+            for (es = d().getElementsByTagName("SCRIPT"), i = es.length; i;) {
+                e = es[--i];
+                //uri = $.ref(e, "src");
+                uri = e.src;
+                if (!isStub(uri)) {
+                    if (uri && (filter == null || !filter(uri))) {
+                        uris.push(uri);
                     }
-                    //TODO: same domain URIs
-                    //jq_urlInternalHost('www')
-
                 }
-                return uris;
+                //TODO: same domain URIs
+                //jq_urlInternalHost('www')
+
             }
-            //alert($.urlInternalHost('[^/]*'));
-            //alert($.urlInternalHost('[^/?#]*'));
-            //)?([^?#]*)(
+            return uris;
+        }
+        //alert($.urlInternalHost('[^/]*'));
+        //alert($.urlInternalHost('[^/?#]*'));
+        //)?([^?#]*)(
         that = {
             _d: function() {
                 // shortcut for analyzer if no specified method is needed on provider
@@ -383,7 +383,7 @@
                     e = all[--i];
 
                     if ((cn = e.className)) { //TODO:vs getAttribute ?
-                        if(typeof cn === 'string') {
+                        if (typeof cn === 'string') {
                             r.push(cn);
                         }
                     }
@@ -518,9 +518,42 @@
                 wnd.React && ret.push("React - " + wnd.React.version);
                 wnd.Backbone && ret.push("Backbone - " + wnd.Backbone.VERSION);
                 wnd._ && ret.push("Underscore - " + wnd._.VERSION);
-                 
+
                 // TODO: wordpress based on scripts.filter(/wp-content/) or other detection (see OWASP as well)
                 return ret;
+            },
+            getGlobals: function() {
+                // just for nostalgy and 2007, I like remy, byt search for better code ?
+                // https://remysharp.com/2007/11/01/detect-global-variables
+                var differences = {},
+                    exceptions,
+                    globals = {},
+                    ignoreList = [],
+                    i = ignoreList.length,
+                    iframe = document.createElement('iframe');
+                while (i--) {
+                    globals[ignoreList[i]] = 1;
+                }
+                for (i in window) {
+                    differences[i] = {
+                        'type': typeof window[i],
+                        'val': window[i]
+                    };
+                }
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+                iframe.src = 'about:blank';
+                iframe = iframe.contentWindow || iframe.contentDocument;
+                for (i in differences) {
+                    if (typeof iframe[i] != 'undefined') delete differences[i];
+                    else if (globals[differences[i].type]) delete differences[i];
+                }
+                exceptions = 'addEventListener,document,location,navigator,window'.split(',');
+                i = exceptions.length;
+                while (--i) {
+                    delete differences[exceptions[i]];
+                }
+                return differences;
             }
         };
         return that;
@@ -945,7 +978,18 @@
                 return [
                     msg(0, str("%0 frameworks (%0) detected", [what.length]), what)
                 ];
+            },
+            "Globals": function() { //TODO: move elsewhere
+                // TODO: add build in override detection
+                var what = [];
+                for (var k in _dp.globals()) { //TODO: map
+                    what.push(k);
+                }
+                return [
+                    msg(0, str("%0 globals (%0) detected", [what.length]), what)
+                ];
             }
+
         };
         var seo = {
             "Description": function() {
@@ -1032,42 +1076,42 @@
         }
 
         function run() {
-                var a = analyzer(dataProvider(window.opener)),
-                    //TODo: extract method, optimize lookups
-                    results = {};
-                for (var sectionName in a) {
-                    results[sectionName] = {};
-                    for (var methodName in a[sectionName]) {
-                        //
-                        var f = a[sectionName][methodName];
-                        //results[sectionName][methodName] = f.apply(a);
-                        //alert(methodName);
-                        f = measuringDelegate(a, f);
-                        results[sectionName][methodName] = f();
-                        results[sectionName][methodName]._time = f._time;
+            var a = analyzer(dataProvider(window.opener)),
+                //TODo: extract method, optimize lookups
+                results = {};
+            for (var sectionName in a) {
+                results[sectionName] = {};
+                for (var methodName in a[sectionName]) {
+                    //
+                    var f = a[sectionName][methodName];
+                    //results[sectionName][methodName] = f.apply(a);
+                    //alert(methodName);
+                    f = measuringDelegate(a, f);
+                    results[sectionName][methodName] = f();
+                    results[sectionName][methodName]._time = f._time;
 
-                    }
                 }
-                var html =
-                    //"<address>Designed by a.in.the.k@gmail.com</address>\
-                    "<nav><label><input id='toggleDetails' type='checkbox'>Toggle Details</label></nav>\
+            }
+            var html =
+                //"<address>Designed by a.in.the.k@gmail.com</address>\
+                "<nav><label><input id='toggleDetails' type='checkbox'>Toggle Details</label></nav>\
                 <article id='summary'><h1>Summary</h1></article>\
                 <article id='results'>" + renderAll(results) + "</article>";
-                document.body.innerHTML = html;
+            document.body.innerHTML = html;
 
-                $("#toggleDetails").click(function() {
-                    $("PRE").slideToggle('linear');
-                });
-                // collect all warnings and errors
-                var errors = $(".error,.warning");
-                $("<UL>").appendTo("#summary").append(
-                    errors.clone().children().remove().end()
-                );
+            $("#toggleDetails").click(function() {
+                $("PRE").slideToggle('linear');
+            });
+            // collect all warnings and errors
+            var errors = $(".error,.warning");
+            $("<UL>").appendTo("#summary").append(
+                errors.clone().children().remove().end()
+            );
 
 
-            }
-            //$(".progress").html("Running analysis...please wait");
-            // TODO: restructure markup
+        }
+        //$(".progress").html("Running analysis...please wait");
+        // TODO: restructure markup
 
 
 
