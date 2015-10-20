@@ -560,15 +560,20 @@
             },
             analytics: function() {
                 var g = that.globals();
-                var r = [];
+                var r = {};
                 for (var k in g) {
                     if (k === "GoogleAnalyticsObject" || k === "ga" || k === "gaGlobal") {
-                        r.push("GoogleAnalytics");
+                        r["Google Analytics"] = 1;
                     } else if (k.indexOf("gemius") !== -1) {
-                        r.push("Gemius");
+                        r.gemius = 1;
+                    } else if (k.indexOf("storm") !== -1) {
+                        r.storm = 1;
+                    } else if (k.indexOf("google_ad") !== -1) {
+                        r["Google Ad"] = 1;
                     }
                 }
-                return r;
+                // TODO: uniq
+                return Object.keys(r); // TODO: < es5
             }
         };
         return that;
