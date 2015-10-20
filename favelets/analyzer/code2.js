@@ -534,10 +534,10 @@
                 while (i--) {
                     globals[ignoreList[i]] = 1;
                 }
-                for (i in window) {
+                for (i in wnd) {
                     differences[i] = {
-                        'type': typeof window[i],
-                        'val': window[i]
+                        'type': typeof wnd[i],
+                        'val': wnd[i]
                     };
                 }
                 iframe.style.display = 'none';
