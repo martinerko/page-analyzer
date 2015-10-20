@@ -522,7 +522,7 @@
                 // TODO: wordpress based on scripts.filter(/wp-content/) or other detection (see OWASP as well)
                 return ret;
             },
-            getGlobals: function() {
+            globals: function() {
                 // just for nostalgy and 2007, I like remy, byt search for better code ?
                 // https://remysharp.com/2007/11/01/detect-global-variables
                 var differences = {},
