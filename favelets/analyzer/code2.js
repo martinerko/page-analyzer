@@ -541,7 +541,7 @@
                     };
                 }
                 iframe.style.display = 'none';
-                var tmp=d().body.appendChild(iframe);
+                var tmp = d().body.appendChild(iframe);
                 iframe.src = 'about:blank';
                 iframe = iframe.contentWindow || iframe.contentDocument;
                 for (i in differences) {
@@ -989,7 +989,7 @@
                     what.push(k);
                 }
                 return [
-                    msg(0, str("%0 globals (%0) detected", [what.length]), what)
+                    msg(what.length == 0 ? 0 : what.length > 5 ? 2 : 1, str("%0 globals (%0) detected", [what.length]), what)
                 ];
             }
 
