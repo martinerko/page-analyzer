@@ -525,7 +525,7 @@
                     r = [];
                 for (var k in g) {
                     if (k.indexOf("dw_") !== -1) {
-                        r["Dynamic Web Coding at www.dyn-web.com"];
+                        r["Dynamic Web Coding at www.dyn-web.com"] = 1;
                     }
                 }
                 ret.concat(Object.keys(r));
