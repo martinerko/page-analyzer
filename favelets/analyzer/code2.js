@@ -564,7 +564,7 @@
                 for (var k in g) {
                     if (k === "GoogleAnalyticsObject" || k === "ga" || k === "gaGlobal") {
                         r["Google Analytics"] = 1;
-                    } else if (k.indexOf("gemius") !== -1) {
+                    } else if (k.indexOf("gemius") !== -1 || k.indexOf("hgmxy_") !== -1) {
                         r.gemius = 1;
                     } else if (k.indexOf("storm") !== -1) {
                         r.storm = 1;
