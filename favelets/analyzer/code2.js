@@ -520,6 +520,8 @@
                 wnd._ && ret.push("Underscore - " + wnd._.VERSION);
                 // https://www.drupal.org/node/304258
                 wnd.Drupal && ret.push("Drupal.js - they have no version ?");
+                wnd.vaadin && ret.push("vaadin - they have no version ?");
+                wnd.janrain && ret.push("janrain - they have no version ?");
 
                 var g = that.globals();
                 var r = {};
