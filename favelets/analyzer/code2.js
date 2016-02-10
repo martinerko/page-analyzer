@@ -1,4 +1,4 @@
-﻿(function() {
+(function() {
 
 
 
@@ -522,6 +522,8 @@
                 wnd.Drupal && ret.push("Drupal.js - they have no version ?");
                 wnd.vaadin && ret.push("vaadin - they have no version ?");
                 wnd.janrain && ret.push("janrain - they have no version ?");
+                wnd.jQuery && wnd.jQuery.fn && wnd.jQuery.fn.modal && ret.push("Bootstrap - " + //
+                (wnd.jQuery.fn.modal.Constructor ? (wnd.jQuery.fn.modal.Constructor.VERSION || "2.x.x - 3.1.1") : "1.x.x"));
 
                 var g = that.globals();
                 var r = {};
